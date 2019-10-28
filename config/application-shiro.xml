@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd        
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-2.0.xsd
+	">
+
+	<!-- 自定义表单认证过滤器 -->
+	<!-- <bean id="CrmFormAuthenticationFilter" class="com.neuedu.crm.shiro.CrmFormAuthenticationFilter"> 
+		</bean> -->
+
+	<!-- web.xml中shiro的filter对应的bean -->
+	<bean id="shiroFilter" class="com.neuedu.crm.shiro.MyShiroFilterFactoryBean">
+		<!-- 管理器，必须设置 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 拦截到，跳转到的地址,通过此地址去认证 -->
+		<property name="loginUrl" value="/pages/user/login.jsp" />
+		<!-- 认证成功统一跳转到/admin/index.do，建议不配置，shiro认证成功自动到上一个请求路径 -->
+		<property name="successUrl" value="/pages/public/common.jsp" />
+		<!-- 通过unauthorizedUrl指定没有权限操作时跳转页面 -->
+		<property name="unauthorizedUrl" value="/pages/public/404.jsp" />
+		<!-- 自定义Filters -->
+		<!-- <property name="filters"> <util:map> <entry key="authc" value-ref="CrmFormAuthenticationFilter" 
+			/> </util:map> </property> -->
+
+		<!-- 自定义filter，可用来更改默认的表单名称配置 -->
+		<property name="filterChainDefinitions">
+			<value>
+
+				<!-- 对静态资源设置匿名访问 -->
+
+				/common/** = anon
+				/css/** = anon
+				/images/** = anon
+				/js/** = anon
+				/json/** = anon
+				/jsplug/** = anon
+				/layui/** = anon
+				/transfer/** = anon
+				/slide/** = anon
+
+				<!-- 对jsp页面进行权限拦截 -->
+				<!-- / = authc -->
+				<!-- /saleChance/** = roles[客户经理] -->
+				<!-- /common/** = authc -->
+				
+				<!-- 公共模块 -->
+				/pages/public/common.jsp = authc
+				/pages/public/commonuserPage.jsp = authc
+				/pages/public/retrievepassword.jsp = anon
+				
+				<!-- 销售机会模块 -->
+				/pages/sale/saletables.jsp = perms[销售机会审核]
+				/pages/sale/saleToGoAudit.jsp = perms[分配销售机会]
+				/pages/sale/overtimeSale.jsp = perms[销售超期不开发]
+				/pages/sale/addSalePage.jsp = perms[新建销售机会]
+				/pages/sale/exploitSale.jsp = perms[销售机会开发]
+				
+				<!-- 客户管理模块 -->
+				/pages/client/preInsertClient.jsp = perms[客户信息录入]
+				/pages/client/clientInfos.jsp = perms[查看客户信息]
+				/pages/outflow/handleOutflowList.jsp = perms[客户流失处理]
+				/pages/outflow/outflowList.jsp = perms[客户流失管理]
+				
+				<!-- 服务管理模块 -->
+				/pages/service/handleList.jsp = perms[服务处理]
+				/pages/service/feedbackList.jsp = perms[服务反馈]
+				/pages/service/archiveList.jsp = perms[服务归档]
+				/pages/service/assignList.jsp = perms[服务分配]
+				/pages/service/reAssignList.jsp = perms[服务归档和再分配]
+				
+				<!-- 统计报表模块 -->
+				/pages/basic/contribute.jsp = perms[客户贡献度分析]
+				/pages/sale/clientConisit.jsp = perms[客户构成分析]
+				/pages/service/serviceStatistics.jsp = perms[客户服务分析]
+				
+				<!-- 基础数据管理模块 -->
+				/pages/basic/productServices.jsp = perms[产品列表]
+				/pages/basic/ordersServices.jsp = perms[历史订单列表]
+				/pages/basic/ordersItemServices.jsp = perms[订单项列表]
+				
+				<!-- 用户中心模块 -->
+				/pages/user/addrole.jsp = authc,roles[管理员]
+				/pages/user/announcements.jsp = perms[发布公告]
+				/pages/user/authoritymanagement.jsp = authc,roles[管理员]
+				/pages/user/message.jsp = authc
+				/pages/user/msgdetails.jsp = authc
+				/pages/user/personalinfo.jsp = authc
+				/pages/user/register.jsp = authc,roles[管理员]
+				/pages/user/rolemanagement.jsp = authc,roles[管理员]
+				/pages/user/userdetails.jsp = authc,roles[管理员]
+				/pages/user/usermanagement.jsp = authc,roles[管理员]
+				
+				<!-- 工具模块 -->
+				/pages/utils/sendEmails.jsp = perms[发送邮件]
+				/pages/utils/logPages.jsp = perms[查看日志]
+
+				/logout = logout
+			</value>
+		</property>
+	</bean>
+
+
+	<!-- 缓存管理器 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />
+	</bean>
+	<bean id="myRealm" class="com.neuedu.crm.shiro.Realm">
+		<property name="userService" ref="userService"></property>
+		<property name="roleService" ref="roleService"></property>
+		<property name="authorityService" ref="authorityService"></property>
+	</bean>
+
+	<bean id="userService" class="com.neuedu.crm.service.impl.UserServiceImpl"
+		depends-on="userMapper">
+	</bean>
+	
+	<bean id="roleService" class="com.neuedu.crm.service.impl.RoleServiceImpl"
+		depends-on="userMapper,roleMapper">
+	</bean>
+	
+	<bean id="authorityService" class="com.neuedu.crm.service.impl.AuthorityServiceImpl"
+		depends-on="userMapper,roleMapper,roleAuthorityMapper,authorityMapper">
+	</bean>
+
+
+	<!-- securityManager安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入缓存管理器 -->
+		<property name="cacheManager" ref="cacheManager" />
+
+		<property name="realm" ref="myRealm" />
+
+		<!-- 注入session管理器 -->
+		<!-- <property name="sessionManager" ref="sessionManager" /> -->
+		<!-- 记住我 -->
+		<!-- <property name="sessionMode" value="native" /> -->
+	</bean>
+
+	<!-- 配置bean后置处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+</beans>  

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- <generatorConfiguration>
+	
+ 	<context id="testTables" targetRuntime="MyBatis3">
+		
+		<commentGenerator>
+			是否去除自动生成的注释, true：是
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		数据库连接的信息：驱动类、连接地址（带端口）、用户名、密码
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://120.78.211.192:3306/sonder" 
+			userId="javauser"
+			password="123456">
+		</jdbcConnection> 
+ 
+		默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL和NUMERIC 类型解析为java.math.BigDecimal
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+ 
+		targetProject:生成POJO类的位置
+		<javaModelGenerator targetPackage="com.neuedu.crm.bean"
+			targetProject="SonderCRM/src">
+			enableSubPackages:是否让schema作为包的后缀
+			<property name="enableSubPackages" value="false" />
+			从数据库返回的值被清理前后的空格
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		
+        targetProject:mapper映射文件生成的位置
+		<sqlMapGenerator targetPackage="mapper" 
+			targetProject="SonderCRM/config">
+			enableSubPackages:是否让schema作为包的后缀
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+		
+		targetPackage：mapper接口生成的位置
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.neuedu.crm.dao" 
+			targetProject="SonderCRM/src">
+			enableSubPackages:是否让schema作为包的后缀
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+		
+		指定数据库表
+		<table tableName="accessory"></table>
+		<table tableName="area"></table>
+		<table tableName="authority"></table>
+		<table tableName="business_plan"></table>
+		<table tableName="business_chance"></table>
+		<table tableName="client"></table>
+		<table tableName="client_class"></table>
+		<table tableName="contact_record"></table>
+		<table tableName="develop_plan"></table>
+		<table tableName="linkman"></table>
+		<table tableName="message"></table>
+		<table tableName="opt_log"></table>
+		<table tableName="order_item"></table>
+		<table tableName="orders"></table>
+		<table tableName="outflow"></table>
+		<table tableName="product"></table>
+		<table tableName="role"></table>
+		<table tableName="role_authority"></table>
+		<table tableName="sale_chance"></table>
+		<table tableName="service"></table>
+		<table tableName="service_type"></table>		
+		<table tableName="task"></table>
+		<table tableName="user"></table>	 
+	 
+	</context>
+	
+</generatorConfiguration> -->

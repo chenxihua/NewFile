@@ -1,0 +1,5 @@
+#这是一个属性配置文件，配置了数据库连接的参数
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://120.78.211.192/sonder?allowMultiQueries=true
+user=javauser
+password=123456

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  	<!-- 配置全局文件时各项要按规定顺序排列 -->
+  	<settings>
+  		<!-- 使用驼峰命名法转换字段。 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 是否允许单条sql 返回多个数据集  (取决于驱动的兼容性) default:true -->
+    	<!-- <setting name="multipleResultSetsEnabled" value="true"/> -->
+    	
+	</settings>
+  
+  
+  	<typeAliases>  	
+  		<!-- 命名统一而且规范时，还可以使用package包名简化别名配置 -->
+  		<package name="com.neuedu.crm.bean"/>
+  	</typeAliases>
+  
+  	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!--分页参数合理化  -->
+			<property name="reasonable" value="true"/>
+		</plugin>
+	</plugins>
+   
+</configuration>
